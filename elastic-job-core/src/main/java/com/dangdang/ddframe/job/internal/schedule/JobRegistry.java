@@ -71,4 +71,18 @@ public final class JobRegistry {
     public JobScheduleController getJobScheduleController(final String jobName) {
         return schedulerMap.get(jobName);
     }
+    
+    /**
+     * 获取所有作业调度控制器.
+     * @return
+     */
+    public List<JobScheduleController> getAllJobScheduleController() {
+        List<JobScheduleController> jobScheduleControllerList = new ArrayList<>();
+        if(schedulerMap.size()>0) {
+            for (Map.Entry<String, JobScheduleController> entry : schedulerMap.entrySet()) {
+                jobScheduleControllerList.add(entry.getValue());
+            }
+        }
+        return jobScheduleControllerList;
+    }
 }

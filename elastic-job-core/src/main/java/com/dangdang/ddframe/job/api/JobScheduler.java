@@ -70,6 +70,15 @@ public class JobScheduler {
         JobRegistry.getInstance().addJobScheduleController(jobExecutor.getJobName(), jobScheduleController);
     }
     
+    public void destroy() {
+        List<JobScheduleController> jobScheduleControllerList = JobRegistry.getInstance().getAllJobScheduleController();
+        if(jobScheduleControllerList.size()>0) {
+            for(JobScheduleController jobScheduleController: jobScheduleControllerList) {
+                jobScheduleController.shutdownGracefully();
+            }
+        }
+    }
+    
     private Scheduler initializeScheduler(final String jobName) throws SchedulerException {
         StdSchedulerFactory factory = new StdSchedulerFactory();
         factory.initialize(getBaseQuartzProperties(jobName));
