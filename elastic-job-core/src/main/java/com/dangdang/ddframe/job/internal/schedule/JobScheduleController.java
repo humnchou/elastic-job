@@ -169,4 +169,18 @@ public class JobScheduleController {
             throw new JobException(ex);
         }
     }
+    
+    /**
+     * 关闭调度器.
+     */
+    public void shutdownGracefully() {
+        schedulerFacade.releaseJobResource();
+        try {
+            if (!scheduler.isShutdown()) {
+                scheduler.shutdown(true);
+            }
+        } catch (final SchedulerException ex) {
+            throw new JobException(ex);
+        }
+    }
 }
